@@ -1,0 +1,62 @@
+name: CFSG full proof rebuild and axiom closure
+
+on:
+  workflow_dispatch:
+    inputs:
+      jobs:
+        description: 'Lake parallelism (adjust for memory)'
+        required: false
+        default: '4'
+      build_timeout:
+        description: 'Full build timeout (GNU timeout syntax)'
+        required: false
+        default: '20h'
+
+permissions:
+  contents: read
+
+# The source tree is approximately 6 GB and upstream cites a build taking
+# up to 24 hours with special Lake changes. Do not schedule on a 14-GB,
+# 6-hour GitHub-hosted runner and then misreport a resource failure as
+# a mathematical refutation. Provision an appropriate self-hosted runner.
+jobs:
+  full-proof-chain:
+    runs-on: [self-hosted, linux, x64, cfsg-large]
+    timeout-minutes: 3000
+    steps:
+      - name: Checkout complete fork, including all certificate source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Record machine capacity
+        run: |
+          df -h .
+          free -h || true
+          nproc
+          git rev-parse HEAD
+
+      - name: Verify matching Lean and Lake toolchain
+        run: |
+          command -v elan
+          command -v lake
+          command -v lean
+          lake --version
+          lean --version
+          cat lean-toolchain
+
+      - name: Rebuild all targets, inspect both final theorem axiom lists
+        env:
+          CFSG_JOBS: ${{ inputs.jobs }}
+          CFSG_BUILD_TIMEOUT: ${{ inputs.build_timeout }}
+        run: bash scripts/rebuild_cfsg_full.sh
+
+      - name: Publish diagnostic files whether build passes or fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cfsg-complete-rebuild-evidence
+          path: audit-results/cfsg-rebuild/
+          if-no-files-found: warn
+          retention-days: 30
