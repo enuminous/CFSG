@@ -6,6 +6,7 @@ on:
       - 'scripts/verify_cfsg_source.py'
       - 'scripts/verify_cfsg_axioms.py'
       - 'scripts/test_verify_cfsg_axioms.py'
+      - 'scripts/rebuild_cfsg_full.sh'
       - 'audit/CFSGChainCheck.lean'
       - 'audit/CFSG_REBUILD_PLAN.md'
   workflow_dispatch:
@@ -37,6 +38,8 @@ jobs:
             audit
             scripts
           sparse-checkout-cone-mode: false
+      - name: Validate rebuild script syntax
+        run: bash -n scripts/rebuild_cfsg_full.sh
       - name: Test fail-closed axiom output parser
         run: python3 -m unittest discover -s scripts -p 'test_verify_cfsg_axioms.py' -v
       - name: Check pinned source and theorem entry points
