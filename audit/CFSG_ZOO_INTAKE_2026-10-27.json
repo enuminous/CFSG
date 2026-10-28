@@ -1,0 +1,20 @@
+{
+  "claims": [
+    {
+      "id": "CFSG-CLASSIFICATION",
+      "target": "https://github.com/enuminous/CFSG/blob/69cb972f587a3ecc035e092253167ff2e303c962/Comparator/Solution.lean",
+      "obligation_inventory_complete": false,
+      "mandatory_obligations": [
+        "reproduce_full_lake_build",
+        "print_axioms_comparator",
+        "print_axioms_native_milestone",
+        "audit_transitive_import_and_certificate_closure",
+        "confirm_no_proof_holes_in_target_closure",
+        "independently_verify_statement_alignment"
+      ],
+      "obligations": {},
+      "results": {},
+      "dependencies": []
+    }
+  ]
+}
