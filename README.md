@@ -48,7 +48,7 @@ def ClassificationStatement : Prop :=
 
 The [complete reconstruction plan](audit/CFSG_REBUILD_PLAN.md) specifies a clean rebuild of the **entire** CFSG import and certificate chain, followed by Lean axiom checks on both the comparator and native realization theorem. The original mathematical source files and dependency pins are kept at the initial Axiom Math commit `69cb972f587a3ecc035e092253167ff2e303c962`.
 
-**Verification status:** [source-provenance preflight PASS](https://github.com/enuminous/CFSG/actions/runs/40733052916). **Full `lake build`: not yet independently reproduced in this fork.** The large build requires a capable Linux machine; see the [manually dispatchable full-rebuild workflow](https://github.com/enuminous/CFSG/actions/workflows/cfsg-full-rebuild.yml), which requires an appropriately labeled self-hosted runner.
+**Verification status:** [source-provenance preflight PASS — 14/14 checks, 5/5 parser tests, shell syntax](https://github.com/enuminous/CFSG/actions/runs/40733464376). **Full `lake build`: not yet independently reproduced in this fork.** The large build requires a capable Linux machine; see the [manually dispatchable full-rebuild workflow](https://github.com/enuminous/CFSG/actions/workflows/cfsg-full-rebuild.yml), which requires an appropriately labeled self-hosted runner.
 
 The checked-in verification entry points are [source preflight](scripts/verify_cfsg_source.py), [full rebuild](scripts/rebuild_cfsg_full.sh), [Lean final-axiom probe](audit/CFSGChainCheck.lean), [axiom-output checker](scripts/verify_cfsg_axioms.py), and [parser regression tests](scripts/test_verify_cfsg_axioms.py). These constitute a reproducibility *harness*, not a new proof or an executed 46-animal Zoo pass.
 
