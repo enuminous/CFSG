@@ -1,0 +1,44 @@
+name: CFSG source preflight
+on:
+  push:
+    paths:
+      - '.github/workflows/cfsg-source-preflight.yml'
+      - 'scripts/verify_cfsg_source.py'
+      - 'audit/CFSGChainCheck.lean'
+      - 'audit/CFSG_REBUILD_PLAN.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout selected text paths without materializing giant certificate trees
+        uses: actions/checkout@v4
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            README.md
+            lean-toolchain
+            lake-manifest.json
+            comparator.json
+            formalization.yaml
+            Comparator
+            CFSG/Statement.lean
+            CFSG/Certified/Classification.lean
+            CFSG/Milestones/CFSG_classification.lean
+            audit
+            scripts
+          sparse-checkout-cone-mode: false
+      - name: Check pinned source and theorem entry points
+        run: python3 scripts/verify_cfsg_source.py --report preflight-result.json
+      - name: Save source preflight evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cfsg-source-preflight
+          path: preflight-result.json
+          if-no-files-found: warn
