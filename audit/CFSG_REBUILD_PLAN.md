@@ -20,8 +20,8 @@ The source preflight checks that the original proof, manifests, and trust-sensit
 
 | Phase | Command / artifact | Current status |
 |---|---|---|
-| 0. Confirm original proofs and pins | `python3 scripts/verify_cfsg_source.py` | **PASS**, [hosted Actions source preflight](https://github.com/enuminous/CFSG/actions/runs/40733052916) |
-| 1. Verify parser itself | `python3 -m unittest discover -s scripts -p 'test_verify_cfsg_axioms.py' -v` | Added to CI; inspect current workflow run |
+| 0. Confirm original proofs and pins | `python3 scripts/verify_cfsg_source.py` | **PASS: 14/14** in [hosted preflight](https://github.com/enuminous/CFSG/actions/runs/40733464376) |
+| 1. Verify parser and rebuild script syntax | Five parser unit tests plus `bash -n scripts/rebuild_cfsg_full.sh` | **PASS: 5/5 tests and shell lint** in [hosted preflight](https://github.com/enuminous/CFSG/actions/runs/40733464376) |
 | 2. Clean source checkout & toolchain | `git clone`, `lake --version`, `lean --version` | NOT YET REPRODUCED for full source |
 | 3. Complete project compilation | `lake build -j 4` | **UNRESOLVED — not executed here** |
 | 4. Two final theorem axiom reports | `lake env lean audit/CFSGChainCheck.lean` | **UNRESOLVED — requires complete build** |
