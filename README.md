@@ -50,6 +50,8 @@ The [complete reconstruction plan](audit/CFSG_REBUILD_PLAN.md) specifies a clean
 
 **Verification status:** [source-provenance preflight PASS — 14/14 checks, 5/5 parser tests, shell syntax](https://github.com/enuminous/CFSG/actions/runs/40733464376). **Full `lake build`: not yet independently reproduced in this fork.** The large build requires a capable Linux machine; see the [manually dispatchable full-rebuild workflow](https://github.com/enuminous/CFSG/actions/workflows/cfsg-full-rebuild.yml), which requires an appropriately labeled self-hosted runner.
 
+**[EFMW-inspired rebuild optimization and Astra execution limits](audit/EFMW_CFSG_OPTIMIZATION_NOTE.md)** — a source-level optimization plan, not a complete proof run.
+
 The checked-in verification entry points are [source preflight](scripts/verify_cfsg_source.py), [full rebuild](scripts/rebuild_cfsg_full.sh), [Lean final-axiom probe](audit/CFSGChainCheck.lean), [axiom-output checker](scripts/verify_cfsg_axioms.py), and [parser regression tests](scripts/test_verify_cfsg_axioms.py). These constitute a reproducibility *harness*, not a new proof or an executed 46-animal Zoo pass.
 
 # License
